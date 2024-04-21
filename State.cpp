@@ -131,6 +131,7 @@ State *State::up()
         new_state->board[i0][j0] = board[i0 - 1][j0];
         new_state->board[i0 - 1][j0] = 0;
         new_state->i0--;
+        new_state->distancia = setDistancia(new_state);
         return new_state;
     }
     return (nullptr);
@@ -144,6 +145,7 @@ State *State::down()
         new_state->board[i0][j0] = board[i0 + 1][j0];
         new_state->board[i0 + 1][j0] = 0;
         new_state->i0++;
+        new_state->distancia = setDistancia(new_state);
         return new_state;
     }
     return (nullptr);
@@ -157,6 +159,7 @@ State *State::right()
         new_state->board[i0][j0] = board[i0][j0 + 1];
         new_state->board[i0][j0 + 1] = 0;
         new_state->j0++;
+        new_state->distancia = setDistancia(new_state);
         return new_state;
     }
     return (nullptr);
@@ -170,6 +173,7 @@ State *State::left()
         new_state->board[i0][j0] = board[i0][j0 - 1];
         new_state->board[i0][j0 - 1] = 0;
         new_state->j0--;
+        new_state->distancia = setDistancia(new_state);
         return new_state;
     }
     return (nullptr);
@@ -227,4 +231,9 @@ int State::countMisplacedTiles()
         }
     }
     return count;
+}
+
+int State::setDistancia(State *estado)
+{
+    return estado->manhattanDistance() + estado->countMisplacedTiles();
 }

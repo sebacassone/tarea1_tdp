@@ -17,6 +17,7 @@ State *Puzzle::generate_init()
     e->parent = nullptr;
     e->i0 = -1; // caso de no encontrar el cero
     e->j0 = -1;
+    e->distancia = e->setDistancia(e);
     if (board == nullptr)
     {
         cout << "No se ha cargado el tablero" << endl;
@@ -62,38 +63,18 @@ void Puzzle::solve()
             e->print();
             return;
         }
-        // cout << "Expandiendo el estado" << endl;
-        //  expandir el estado e --> notar la repeticion que se hace (no es buena practica, deberia disponerse de un arreglo de movimientos posibles)
-        State *e_up = e->up(); // si genera estado invalido, genera nullptr
-        if (e_up != nullptr && // si es valido
-            !all->find(e_up))
-        { // si no esta en todos
-            open->push(e_up);
-            all->push(e_up);
-        }
-
-        State *e_down = e->down(); // si genera estado invalido, genera nullptr
-        if (e_down != nullptr &&
-            !all->find(e_down))
+        // Iterar sobre los posibles movimientos (arriba, abajo, izquierda, derecha)
+        for (auto move : {&State::up, &State::down, &State::left, &State::right})
         {
-            open->push(e_down);
-            all->push(e_down);
-        }
-
-        State *e_left = e->left(); // si genera estado invalido, genera nullptr
-        if (e_left != nullptr &&
-            !all->find(e_left))
-        {
-            open->push(e_left);
-            all->push(e_left);
-        }
-
-        State *e_right = e->right(); // si genera estado invalido, genera nullptr
-        if (e_right != nullptr &&
-            !all->find(e_right))
-        {
-            open->push(e_right);
-            all->push(e_right);
+            // Generar el nuevo estado aplicando el movimiento correspondiente
+            State *new_state = (e->*move)(); // Llamar al método de movimiento dinámicamente
+            // Verificar si el movimiento es válido y el estado no se ha explorado antes
+            if (new_state != nullptr && !all->find(new_state))
+            {
+                // Agregar el nuevo estado a las listas open y all
+                open->push(new_state);
+                all->push(new_state);
+            }
         }
     }
     cout << "No se encontro solucion" << endl;

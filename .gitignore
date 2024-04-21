@@ -60,3 +60,4 @@ testHeap
 testPuzzle
 testStack
 testState
+testAvl
