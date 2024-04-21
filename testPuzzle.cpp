@@ -2,13 +2,14 @@
 
 int main()
 {
+    int size = 2;
     Puzzle *p = new Puzzle();
-    p->board = new int *[2];
-    p->size = 2;
+    p->board = new int *[size];
+    p->size = size;
 
-    for (int i = 0; i < 2; i++)
+    for (int i = 0; i < size; i++)
     {
-        p->board[i] = new int[2];
+        p->board[i] = new int[size];
     }
     p->board[0][0] = 0;
     p->board[0][1] = 1;

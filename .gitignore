@@ -52,3 +52,11 @@
 # Ignore all local history of files
 .history
 .ionide
+
+### Test ###
+test
+tests
+testHeap
+testPuzzle
+testStack
+testState

@@ -28,4 +28,4 @@ main: Puzzle.o State.o Stack.o main.cpp
 	g++ -g State.o Stack.o Puzzle.o main.cpp -o main
 
 clean:
-	rm -f *.o testState testStack testPuzzle main
+	rm -f *.o testState testStack testPuzzle testHeap main

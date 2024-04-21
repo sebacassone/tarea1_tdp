@@ -139,7 +139,7 @@ State *State::up()
 State *State::down()
 {
     if (i0 != size - 1)
-    { // si no esta en la primera fila entonces puedo subir el 0
+    { // si no esta en la última fila entonces puedo subir el 0
         State *new_state = copy();
         new_state->board[i0][j0] = board[i0 + 1][j0];
         new_state->board[i0 + 1][j0] = 0;
@@ -191,4 +191,40 @@ bool State::equals(State *s)
     // el resto de los elementos (size,parent,i0,j0) de state debiesen ser iguales
     // sino existe un error en la implementacion
     return true;
+}
+
+// Función para calcular la distancia de Manhattan
+int State::manhattanDistance()
+{
+    int distance = 0;
+    for (int i = 0; i < size; ++i)
+    {
+        for (int j = 0; j < size; ++j)
+        {
+            if (board[i][j] != 0)
+            {                                                          // Ignorar la casilla vacía
+                int expected_i = (board[i][j] - 1) / size;             // Fila esperada
+                int expected_j = (board[i][j] - 1) % size;             // Columna esperada
+                distance += abs(i - expected_i) + abs(j - expected_j); // Calcular la distancia Manhattan
+            }
+        }
+    }
+    return distance;
+}
+
+// Función para contar el número de casillas mal colocadas
+int State::countMisplacedTiles()
+{
+    int count = 0;
+    for (int i = 0; i < size; ++i)
+    {
+        for (int j = 0; j < size; ++j)
+        {
+            if (board[i][j] != 0 && board[i][j] != (i * size + j + 1))
+            {            // Ignorar la casilla vacía y las colocadas correctamente
+                ++count; // Incrementar el contador si la casilla no está en la posición correcta
+            }
+        }
+    }
+    return count;
 }

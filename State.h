@@ -23,6 +23,8 @@ public:
     State *left();
     State *right();
     State *copy();
+    int manhattanDistance();
+    int countMisplacedTiles();
     bool equals(State *s); // compara dos estados
                            // bool equals(State *s); // compara dos estados
 };
