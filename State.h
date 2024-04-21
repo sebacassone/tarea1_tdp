@@ -13,11 +13,6 @@ public:
     int distancia; // la distancia obtenido con heuristica
     State *parent;
 
-    // Para el árbol
-    State *izqNodo;
-    State *derNodo;
-    int height;
-
     // Metodos
     State();
     State(int size);

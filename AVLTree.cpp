@@ -7,117 +7,117 @@ AVLTree::~AVLTree()
     destroyTree(root);
 }
 
-void AVLTree::destroyTree(State *root)
+void AVLTree::destroyTree(AVLNode *root)
 {
     if (root != nullptr)
     {
-        destroyTree(root->izqNodo);
-        destroyTree(root->derNodo);
+        destroyTree(root->left);
+        destroyTree(root->right);
         delete root;
     }
 }
 
-int AVLTree::height(State *node)
+int AVLTree::height(AVLNode *node)
 {
     if (node == nullptr)
         return 0;
     return node->height;
 }
 
-int AVLTree::balanceFactor(State *node)
+int AVLTree::balanceFactor(AVLNode *node)
 {
     if (node == nullptr)
         return 0;
-    return height(node->izqNodo) - height(node->derNodo);
+    return height(node->left) - height(node->right);
 }
 
-State *AVLTree::rotatederNodo(State *y)
+AVLNode *AVLTree::rotateRight(AVLNode *y)
 {
-    State *x = y->izqNodo;
-    State *T2 = x->derNodo;
+    AVLNode *x = y->left;
+    AVLNode *T2 = x->right;
 
-    x->derNodo = y;
-    y->izqNodo = T2;
+    x->right = y;
+    y->left = T2;
 
-    y->height = std::max(height(y->izqNodo), height(y->derNodo)) + 1;
-    x->height = std::max(height(x->izqNodo), height(x->derNodo)) + 1;
+    y->height = std::max(height(y->left), height(y->right)) + 1;
+    x->height = std::max(height(x->left), height(x->right)) + 1;
 
     return x;
 }
 
-State *AVLTree::rotateizqNodo(State *x)
+AVLNode *AVLTree::rotateLeft(AVLNode *x)
 {
-    State *y = x->derNodo;
-    State *T2 = y->izqNodo;
+    AVLNode *y = x->right;
+    AVLNode *T2 = y->left;
 
-    y->izqNodo = x;
-    x->derNodo = T2;
+    y->left = x;
+    x->right = T2;
 
-    x->height = std::max(height(x->izqNodo), height(x->derNodo)) + 1;
-    y->height = std::max(height(y->izqNodo), height(y->derNodo)) + 1;
+    x->height = std::max(height(x->left), height(x->right)) + 1;
+    y->height = std::max(height(y->left), height(y->right)) + 1;
 
     return y;
 }
 
-State *AVLTree::insertNode(State *node, int value)
+AVLNode *AVLTree::insertNode(AVLNode *node, int value)
 {
     if (node == nullptr)
-        return new State(value);
+        return new AVLNode(value);
 
-    if (value < node->distancia)
-        node->izqNodo = insertNode(node->izqNodo, value);
-    else if (value > node->distancia)
-        node->derNodo = insertNode(node->derNodo, value);
+    if (value < node->data)
+        node->left = insertNode(node->left, value);
+    else if (value > node->data)
+        node->right = insertNode(node->right, value);
     else
         return node;
 
-    node->height = 1 + std::max(height(node->izqNodo), height(node->derNodo));
+    node->height = 1 + std::max(height(node->left), height(node->right));
 
     int balance = balanceFactor(node);
 
-    if (balance > 1 && value < node->izqNodo->distancia)
-        return rotatederNodo(node);
+    if (balance > 1 && value < node->left->data)
+        return rotateRight(node);
 
-    if (balance < -1 && value > node->derNodo->distancia)
-        return rotateizqNodo(node);
+    if (balance < -1 && value > node->right->data)
+        return rotateLeft(node);
 
-    if (balance > 1 && value > node->izqNodo->distancia)
+    if (balance > 1 && value > node->left->data)
     {
-        node->izqNodo = rotateizqNodo(node->izqNodo);
-        return rotatederNodo(node);
+        node->left = rotateLeft(node->left);
+        return rotateRight(node);
     }
 
-    if (balance < -1 && value < node->derNodo->distancia)
+    if (balance < -1 && value < node->right->data)
     {
-        node->derNodo = rotatederNodo(node->derNodo);
-        return rotateizqNodo(node);
+        node->right = rotateRight(node->right);
+        return rotateLeft(node);
     }
 
     return node;
 }
 
-State *AVLTree::minValueNode(State *node)
+AVLNode *AVLTree::minValueNode(AVLNode *node)
 {
-    State *current = node;
-    while (current->izqNodo != nullptr)
-        current = current->izqNodo;
+    AVLNode *current = node;
+    while (current->left != nullptr)
+        current = current->left;
     return current;
 }
 
-State *AVLTree::deleteNode(State *root, int value)
+AVLNode *AVLTree::deleteNode(AVLNode *root, int value)
 {
     if (root == nullptr)
         return root;
 
-    if (value < root->distancia)
-        root->izqNodo = deleteNode(root->izqNodo, value);
-    else if (value > root->distancia)
-        root->derNodo = deleteNode(root->derNodo, value);
+    if (value < root->data)
+        root->left = deleteNode(root->left, value);
+    else if (value > root->data)
+        root->right = deleteNode(root->right, value);
     else
     {
-        if (root->izqNodo == nullptr || root->derNodo == nullptr)
+        if (root->left == nullptr || root->right == nullptr)
         {
-            State *temp = root->izqNodo ? root->izqNodo : root->derNodo;
+            AVLNode *temp = root->left ? root->left : root->right;
 
             if (temp == nullptr)
             {
@@ -130,47 +130,47 @@ State *AVLTree::deleteNode(State *root, int value)
         }
         else
         {
-            State *temp = minValueNode(root->derNodo);
-            root->distancia = temp->distancia;
-            root->derNodo = deleteNode(root->derNodo, temp->distancia);
+            AVLNode *temp = minValueNode(root->right);
+            root->data = temp->data;
+            root->right = deleteNode(root->right, temp->data);
         }
     }
 
     if (root == nullptr)
         return root;
 
-    root->height = 1 + std::max(height(root->izqNodo), height(root->derNodo));
+    root->height = 1 + std::max(height(root->left), height(root->right));
 
     int balance = balanceFactor(root);
 
-    if (balance > 1 && balanceFactor(root->izqNodo) >= 0)
-        return rotatederNodo(root);
+    if (balance > 1 && balanceFactor(root->left) >= 0)
+        return rotateRight(root);
 
-    if (balance > 1 && balanceFactor(root->izqNodo) < 0)
+    if (balance > 1 && balanceFactor(root->left) < 0)
     {
-        root->izqNodo = rotateizqNodo(root->izqNodo);
-        return rotatederNodo(root);
+        root->left = rotateLeft(root->left);
+        return rotateRight(root);
     }
 
-    if (balance < -1 && balanceFactor(root->derNodo) <= 0)
-        return rotateizqNodo(root);
+    if (balance < -1 && balanceFactor(root->right) <= 0)
+        return rotateLeft(root);
 
-    if (balance < -1 && balanceFactor(root->derNodo) > 0)
+    if (balance < -1 && balanceFactor(root->right) > 0)
     {
-        root->derNodo = rotatederNodo(root->derNodo);
-        return rotateizqNodo(root);
+        root->right = rotateRight(root->right);
+        return rotateLeft(root);
     }
 
     return root;
 }
 
-void AVLTree::inorder(State *root)
+void AVLTree::inorder(AVLNode *root)
 {
     if (root == nullptr)
         return;
-    inorder(root->izqNodo);
-    std::cout << root->distancia << " ";
-    inorder(root->derNodo);
+    inorder(root->left);
+    std::cout << root->data << " ";
+    inorder(root->right);
 }
 
 void AVLTree::insert(int value)
@@ -185,18 +185,18 @@ void AVLTree::remove(int value)
 
 void AVLTree::search(int value)
 {
-    State *node = root;
+    AVLNode *node = root;
     while (node != nullptr)
     {
-        if (node->distancia == value)
+        if (node->data == value)
         {
             std::cout << "El valor " << value << " está presente en el árbol AVL." << std::endl;
             return;
         }
-        else if (node->distancia < value)
-            node = node->derNodo;
+        else if (node->data < value)
+            node = node->right;
         else
-            node = node->izqNodo;
+            node = node->left;
     }
     std::cout << "El valor " << value << " no está presente en el árbol AVL." << std::endl;
 }
