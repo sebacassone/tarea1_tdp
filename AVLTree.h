@@ -13,6 +13,7 @@ public:
     AVLNode *rotateRight(AVLNode *y);
     AVLNode *rotateLeft(AVLNode *x);
     AVLNode *insertNode(AVLNode *node, State *value);
+    AVLNode *insertNodeAll(AVLNode *node, State *value);
     AVLNode *minValueNode(AVLNode *node);
     AVLNode *deleteNode(AVLNode *root, State *value);
     void inorder(AVLNode *root);
@@ -20,7 +21,8 @@ public:
     AVLTree();
     ~AVLTree();
     // Métodos que importan!!!
-    void push(State *value);
+    void push(State *value);    // Para open
+    void pushAll(State *value); // Para all
     State *pop();
     bool search(State *value);
     void printInorder();

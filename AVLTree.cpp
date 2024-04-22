@@ -181,6 +181,21 @@ void AVLTree::push(State *value)
     root = insertNode(root, value);
 }
 
+void AVLTree::pushAll(State *value)
+{
+    // Se hace una copia del nodo
+    State *copy = value->copy();
+    copy->board = nullptr;
+    copy->parent = nullptr;
+    copy->distancia = value->distancia;
+    copy->i0 = NULL;
+    copy->j0 = NULL;
+    copy->size = NULL;
+
+    // Se obtiene solo el valor de distancia y se inserta en el árbol
+    root = insertNode(root, copy);
+}
+
 State *AVLTree::pop()
 {
     State *value = root->state;

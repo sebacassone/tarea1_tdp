@@ -51,12 +51,12 @@ void Puzzle::solve()
         cout << "No se pudo generar el estado inicial" << endl;
         return;
     }
-    open->push(e_init); // agrega en los abierto el tablero inicial
-    all->push(e_init);  // agrega en todos (ex cerrados )el tablero inicial
+    open->push(e_init);   // agrega en los abierto el tablero inicial
+    all->pushAll(e_init); // agrega en todos (ex cerrados )el tablero inicial
     while (!open->isEmpty())
     {                           // mientras existan nodos por visitar
         State *e = open->pop(); // deberia obtener el mejor estado
-        cout << "Estado actual:" << e << " i0:" << e->i0 << " j0:" << e->j0 << " size:" << e->size << " parent:" << e->parent << endl;
+        // cout << "Estado actual:" << e << " i0:" << e->i0 << " j0:" << e->j0 << " size:" << e->size << " parent:" << e->parent << endl;
         if (e->isSol())
         {
             cout << "Encontramos la solucion:" << endl;
@@ -81,7 +81,7 @@ void Puzzle::solve()
             !all->search(e_up))
         { // si no esta en todos
             open->push(e_up);
-            all->push(e_up);
+            all->pushAll(e_up);
         }
 
         State *e_down = e->down(); // si genera estado invalido, genera nullptr
@@ -89,7 +89,7 @@ void Puzzle::solve()
             !all->search(e_down))
         {
             open->push(e_down);
-            all->push(e_down);
+            all->pushAll(e_down);
         }
 
         State *e_left = e->left(); // si genera estado invalido, genera nullptr
@@ -97,7 +97,7 @@ void Puzzle::solve()
             !all->search(e_left))
         {
             open->push(e_left);
-            all->push(e_left);
+            all->pushAll(e_left);
         }
 
         State *e_right = e->right(); // si genera estado invalido, genera nullptr
@@ -105,7 +105,7 @@ void Puzzle::solve()
             !all->search(e_right))
         {
             open->push(e_right);
-            all->push(e_right);
+            all->pushAll(e_right);
         }
     }
     cout << "No se encontro solucion" << endl;
