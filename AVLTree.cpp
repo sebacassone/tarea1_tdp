@@ -188,9 +188,9 @@ void AVLTree::pushAll(State *value)
     copy->board = nullptr;
     copy->parent = nullptr;
     copy->distancia = value->distancia;
-    copy->i0 = NULL;
-    copy->j0 = NULL;
-    copy->size = NULL;
+    copy->i0 = 0;
+    copy->j0 = 0;
+    copy->size = 0;
 
     // Se obtiene solo el valor de distancia y se inserta en el árbol
     root = insertNode(root, copy);
