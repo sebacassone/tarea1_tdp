@@ -81,11 +81,13 @@ void State::print_board()
 
 void State::print()
 {
+    static int callCount = 0;
     if (parent != nullptr)
     {
         parent->print();
     }
 
+    std::cout << "Paso " << callCount++ << std::endl;
     print_board();
     std::cout << std::endl;
 }
@@ -234,7 +236,28 @@ int State::countMisplacedTiles()
     return count;
 }
 
+double State::euclideanDistance()
+{
+    double distance = 0.0;
+    for (int i = 0; i < size; ++i)
+    {
+        for (int j = 0; j < size; ++j)
+        {
+            int value = board[i][j];
+            if (value != 0)
+            { // No calcular la distancia para el espacio vacío
+                int targetRow = (value - 1) / size;
+                int targetCol = (value - 1) % size;
+                double dx = i - targetRow;
+                double dy = j - targetCol;
+                distance += sqrt(dx * dx + dy * dy); // Distancia euclidiana
+            }
+        }
+    }
+    return distance;
+}
+
 int State::setDistancia(State *estado)
 {
-    return estado->manhattanDistance() + estado->countMisplacedTiles();
+    return estado->countMisplacedTiles() + estado->euclideanDistance();
 }

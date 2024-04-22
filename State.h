@@ -1,4 +1,5 @@
 #include <iostream>
+#include <cmath>
 
 /// vamos a definir la clase State de manera abstracta
 class State
@@ -30,6 +31,7 @@ public:
     int setDistancia(State *estado); // setea la distancia según la heurística
     int manhattanDistance();
     int countMisplacedTiles();
+    double euclideanDistance();
     bool equals(State *s); // compara dos estados
                            // bool equals(State *s); // compara dos estados
 };
