@@ -1,4 +1,5 @@
 #include <iostream>
+#include <fstream>
 #include "AVLTree.h"
 using namespace std;
 
@@ -14,4 +15,5 @@ public:
     ~Puzzle();
     State *generate_init(); // genera el estado inicial desde board
     void solve();           // opera el algoritmo A*
+    void load_board(string filename, int board_size);
 };

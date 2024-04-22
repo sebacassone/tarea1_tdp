@@ -36,8 +36,8 @@ testAvl: testAvl.cpp AVLTree.o AVLTreeNode.o State.o
 testAvlNode: testAvlNode.cpp AVLTreeNode.o State.o
 	g++ -g AVLTreeNode.o testAvlNode.cpp State.o -o testAvlNode
 
-main: Puzzle.o State.o Stack.o main.cpp
-	g++ -g State.o Stack.o Puzzle.o main.cpp -o main
+main: Puzzle.o State.o AVLTree.o AVLTreeNode.o main.cpp
+	g++ -g Puzzle.o State.o AVLTree.o AVLTreeNode.o main.cpp -o main
 
 clean:
 	rm -f *.o testState testStack testPuzzle testHeap testAvl testAvlNode main
