@@ -91,6 +91,17 @@ int main()
     // Imprime el recorrido inorder del árbol AVL
     avl->printInorder();
 
+    // Se busca el nodo raiz eliminado
+    bool encontrado = avl->search(raiz);
+    if (encontrado)
+    {
+        std::cout << "El estado con distancia " << raiz->distancia << " ha sido encontrado." << std::endl;
+    }
+    else
+    {
+        std::cout << "El estado con distancia " << raiz->distancia << " no ha sido encontrado." << std::endl;
+    }
+
     delete avl;
 
     return 0;

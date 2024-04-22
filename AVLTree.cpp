@@ -185,8 +185,13 @@ State *AVLTree::pop()
 {
     State *value = root->state;
     std::cout << "Se ha eliminado el estado con distancia " << value->distancia << " del árbol AVL." << std::endl;
+    // Hace una copia de value para poder recuperarlo después de eliminarlo
+    State *copy = value->copy();
+    copy->distancia = value->distancia;
+
     root = deleteNode(root, value);
-    return value;
+    std::cout << "Se ha eliminado el estado con distancia " << copy->distancia << " del árbol AVL." << std::endl;
+    return copy;
 }
 
 bool AVLTree::search(State *value)
@@ -198,6 +203,7 @@ bool AVLTree::search(State *value)
         if (node->state == value)
         {
             found = true;
+            break; // Termina el bucle cuando se encuentra el nodo
         }
         else if (node->state->distancia < value->distancia)
             node = node->right;
