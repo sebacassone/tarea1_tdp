@@ -213,3 +213,11 @@ void AVLTree::printInorder()
     inorder(root);
     std::cout << std::endl;
 }
+
+bool AVLTree::isEmpty()
+{
+    bool isEmpty = false;
+    if (root == nullptr)
+        isEmpty = true;
+    return isEmpty;
+}

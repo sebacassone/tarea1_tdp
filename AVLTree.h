@@ -24,6 +24,7 @@ public:
     State *pop();
     void search(int value);
     void printInorder();
+    bool isEmpty();
 };
 
 #endif // AVLTREE_H
