@@ -24,8 +24,8 @@ testState: testState.cpp State.o
 testStack: testStack.cpp Stack.o State.o
 	g++ -g State.o Stack.o testStack.cpp -o testStack
 
-testPuzzle: testPuzzle.cpp Puzzle.o State.o Stack.o
-	g++ -g State.o Stack.o Puzzle.o testPuzzle.cpp -o testPuzzle
+testPuzzle: testPuzzle.cpp Puzzle.o State.o AVLTree.o AVLTreeNode.o
+	g++ -g State.o Puzzle.o AVLTree.o AVLTreeNode.o testPuzzle.cpp -o testPuzzle
 
 testHeap: testHeap.cpp Heap.o
 	g++ -g Heap.o testHeap.cpp -o testHeap
