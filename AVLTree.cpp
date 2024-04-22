@@ -62,14 +62,14 @@ AVLNode *AVLTree::rotateLeft(AVLNode *x)
     return y;
 }
 
-AVLNode *AVLTree::insertNode(AVLNode *node, int value)
+AVLNode *AVLTree::insertNode(AVLNode *node, State *value)
 {
     if (node == nullptr)
         return new AVLNode(value);
 
-    if (value < node->state->distancia)
+    if (value->distancia < node->state->distancia)
         node->left = insertNode(node->left, value);
-    else if (value > node->state->distancia)
+    else if (value->distancia > node->state->distancia)
         node->right = insertNode(node->right, value);
     else
         return node;
@@ -78,19 +78,19 @@ AVLNode *AVLTree::insertNode(AVLNode *node, int value)
 
     int balance = balanceFactor(node);
 
-    if (balance > 1 && value < node->left->state->distancia)
+    if (balance > 1 && value->distancia < node->left->state->distancia)
         return rotateRight(node);
 
-    if (balance < -1 && value > node->right->state->distancia)
+    if (balance < -1 && value->distancia > node->right->state->distancia)
         return rotateLeft(node);
 
-    if (balance > 1 && value > node->left->state->distancia)
+    if (balance > 1 && value->distancia > node->left->state->distancia)
     {
         node->left = rotateLeft(node->left);
         return rotateRight(node);
     }
 
-    if (balance < -1 && value < node->right->state->distancia)
+    if (balance < -1 && value->distancia < node->right->state->distancia)
     {
         node->right = rotateRight(node->right);
         return rotateLeft(node);
@@ -107,14 +107,14 @@ AVLNode *AVLTree::minValueNode(AVLNode *node)
     return current;
 }
 
-AVLNode *AVLTree::deleteNode(AVLNode *root, int value)
+AVLNode *AVLTree::deleteNode(AVLNode *root, State *value)
 {
     if (root == nullptr)
         return root;
 
-    if (value < root->state->distancia)
+    if (value->distancia < root->state->distancia)
         root->left = deleteNode(root->left, value);
-    else if (value > root->state->distancia)
+    else if (value->distancia > root->state->distancia)
         root->right = deleteNode(root->right, value);
     else
     {
@@ -135,7 +135,7 @@ AVLNode *AVLTree::deleteNode(AVLNode *root, int value)
         {
             AVLNode *temp = minValueNode(root->right);
             root->state->distancia = temp->state->distancia;
-            root->right = deleteNode(root->right, temp->state->distancia);
+            root->right = deleteNode(root->right, temp->state);
         }
     }
 
@@ -176,13 +176,14 @@ void AVLTree::inorder(AVLNode *root)
     inorder(root->right);
 }
 
-void AVLTree::insert(int value)
+void AVLTree::push(State *value)
 {
     root = insertNode(root, value);
 }
 
-void AVLTree::remove(int value)
+void AVLTree::pop()
 {
+    State *value = root->state;
     root = deleteNode(root, value);
 }
 

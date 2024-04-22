@@ -30,8 +30,8 @@ testPuzzle: testPuzzle.cpp Puzzle.o State.o Stack.o
 testHeap: testHeap.cpp Heap.o
 	g++ -g Heap.o testHeap.cpp -o testHeap
 
-testAvl: testAvl.cpp AVLTree.o AVLTreeNode.o
-	g++ -g AVLTree.o AVLTreeNode.o testAvl.cpp -o testAvl
+testAvl: testAvl.cpp AVLTree.o AVLTreeNode.o State.o
+	g++ -g AVLTree.o AVLTreeNode.o State.o testAvl.cpp -o testAvl
 
 testAvlNode: testAvlNode.cpp AVLTreeNode.o State.o
 	g++ -g AVLTreeNode.o testAvlNode.cpp State.o -o testAvlNode
