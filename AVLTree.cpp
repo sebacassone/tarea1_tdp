@@ -111,7 +111,7 @@ AVLNode *AVLTree::deleteNode(AVLNode *root, State *value)
 {
     if (root == nullptr)
         return root;
-    AVLNode *deletedNode = nullptr; // Variable to store the deleted node
+
     if (value->distancia < root->state->distancia)
         root->left = deleteNode(root->left, value);
     else if (value->distancia > root->state->distancia)
@@ -121,6 +121,7 @@ AVLNode *AVLTree::deleteNode(AVLNode *root, State *value)
         if (root->left == nullptr || root->right == nullptr)
         {
             AVLNode *temp = root->left ? root->left : root->right;
+
             if (temp == nullptr)
             {
                 temp = root;
@@ -128,7 +129,6 @@ AVLNode *AVLTree::deleteNode(AVLNode *root, State *value)
             }
             else
                 *root = *temp;
-            deletedNode = temp; // Store the deleted node
             delete temp;
         }
         else
@@ -141,10 +141,14 @@ AVLNode *AVLTree::deleteNode(AVLNode *root, State *value)
 
     if (root == nullptr)
         return root;
+
     root->height = 1 + std::max(height(root->left), height(root->right));
+
     int balance = balanceFactor(root);
+
     if (balance > 1 && balanceFactor(root->left) >= 0)
         return rotateRight(root);
+
     if (balance > 1 && balanceFactor(root->left) < 0)
     {
         root->left = rotateLeft(root->left);
@@ -153,13 +157,14 @@ AVLNode *AVLTree::deleteNode(AVLNode *root, State *value)
 
     if (balance < -1 && balanceFactor(root->right) <= 0)
         return rotateLeft(root);
+
     if (balance < -1 && balanceFactor(root->right) > 0)
     {
         root->right = rotateRight(root->right);
         return rotateLeft(root);
     }
 
-    return deletedNode; // Return the deleted node
+    return root;
 }
 
 void AVLTree::inorder(AVLNode *root)
@@ -179,8 +184,8 @@ void AVLTree::push(State *value)
 State *AVLTree::pop()
 {
     State *value = root->state;
-    root = deleteNode(root, value);
     std::cout << "Se ha eliminado el estado con distancia " << value->distancia << " del árbol AVL." << std::endl;
+    root = deleteNode(root, value);
     return value;
 }
 
