@@ -22,7 +22,7 @@ public:
     // Métodos que importan!!!
     void push(State *value);
     State *pop();
-    void search(int value);
+    bool search(State *value);
     void printInorder();
     bool isEmpty();
 };

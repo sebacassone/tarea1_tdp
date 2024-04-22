@@ -6,8 +6,8 @@ Puzzle::Puzzle()
 {
     size = 0;
     board = nullptr;
-    open = new Stack(100); // sirve para almacenar los nodos abiertos (por visitar)
-    all = new Stack(100);  // Sirve para almacenar todos los nodos visitados
+    open = new AVLTree(); // sirve para almacenar los nodos abiertos (por visitar)
+    all = new AVLTree();  // Sirve para almacenar todos los nodos visitados
 }
 
 State *Puzzle::generate_init()
@@ -69,7 +69,7 @@ void Puzzle::solve()
             // Generar el nuevo estado aplicando el movimiento correspondiente
             State *new_state = (e->*move)(); // Llamar al método de movimiento dinámicamente
             // Verificar si el movimiento es válido y el estado no se ha explorado antes
-            if (new_state != nullptr && !all->find(new_state))
+            if (new_state != nullptr && !all->search(new_state))
             {
                 // Agregar el nuevo estado a las listas open y all
                 open->push(new_state);

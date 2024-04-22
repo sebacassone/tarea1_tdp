@@ -189,22 +189,22 @@ State *AVLTree::pop()
     return value;
 }
 
-void AVLTree::search(int value)
+bool AVLTree::search(State *value)
 {
     AVLNode *node = root;
+    bool found = false;
     while (node != nullptr)
     {
-        if (node->state->distancia == value)
+        if (node->state == value)
         {
-            std::cout << "El valor " << value << " está presente en el árbol AVL." << std::endl;
-            return;
+            found = true;
         }
-        else if (node->state->distancia < value)
+        else if (node->state->distancia < value->distancia)
             node = node->right;
         else
             node = node->left;
     }
-    std::cout << "El valor " << value << " no está presente en el árbol AVL." << std::endl;
+    return found;
 }
 
 void AVLTree::printInorder()
