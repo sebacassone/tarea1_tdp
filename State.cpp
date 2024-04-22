@@ -259,5 +259,5 @@ double State::euclideanDistance()
 
 int State::setDistancia(State *estado)
 {
-    return estado->countMisplacedTiles() + estado->euclideanDistance();
+    return estado->euclideanDistance();
 }
