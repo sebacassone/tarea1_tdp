@@ -85,6 +85,12 @@ int main()
     // Imprime el recorrido inorder del árbol AVL
     avl->printInorder();
 
+    // Elimina el estado con distancia 5
+    State *raiz = avl->pop();
+
+    // Imprime el recorrido inorder del árbol AVL
+    avl->printInorder();
+
     delete avl;
 
     return 0;

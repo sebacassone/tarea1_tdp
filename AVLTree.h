@@ -19,8 +19,9 @@ public:
     void destroyTree(AVLNode *root);
     AVLTree();
     ~AVLTree();
+    // Métodos que importan!!!
     void push(State *value);
-    void pop();
+    State *pop();
     void search(int value);
     void printInorder();
 };
