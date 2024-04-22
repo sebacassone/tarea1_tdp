@@ -1,12 +1,13 @@
 #include <iostream>
+#include "State.h"
 
 class AVLNode
 {
 public:
-    int data;
+    State *state; // Estado del puzzle
     AVLNode *left;
     AVLNode *right;
     int height;
 
-    AVLNode(int value);
+    AVLNode(State *state);
 };

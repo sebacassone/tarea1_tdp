@@ -33,11 +33,11 @@ testHeap: testHeap.cpp Heap.o
 testAvl: testAvl.cpp AVLTree.o AVLTreeNode.o
 	g++ -g AVLTree.o AVLTreeNode.o testAvl.cpp -o testAvl
 
-testAvlNode: testAvlNode.cpp AVLTreeNode.o
-	g++ -g AVLTreeNode.o testAvlNode.cpp -o testAvlNode
+testAvlNode: testAvlNode.cpp AVLTreeNode.o State.o
+	g++ -g AVLTreeNode.o testAvlNode.cpp State.o -o testAvlNode
 
 main: Puzzle.o State.o Stack.o main.cpp
 	g++ -g State.o Stack.o Puzzle.o main.cpp -o main
 
 clean:
-	rm -f *.o testState testStack testPuzzle testHeap testAvl main
+	rm -f *.o testState testStack testPuzzle testHeap testAvl testAvlNode main

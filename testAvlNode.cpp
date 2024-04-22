@@ -2,26 +2,30 @@
 
 int main(void)
 {
-    AVLNode *node = new AVLNode(10);
-    AVLNode *node2 = new AVLNode(20);
-    AVLNode *node3 = new AVLNode(30);
-    AVLNode *node4 = new AVLNode(40);
-    AVLNode *node5 = new AVLNode(50);
-    AVLNode *node6 = new AVLNode(25);
+    // Se crean los estados
+    State *state = new State(2, nullptr);
+    State *state2 = new State(2, state);
+    State *state3 = new State(2, state2);
+    State *state4 = new State(2, state3);
+    State *state5 = new State(2, state4);
+    State *state6 = new State(2, state5);
 
-    node->left = node2;
-    node->right = node3;
-    node2->left = node4;
-    node2->right = node5;
-    node3->left = node6;
+    // Se crean los nodos nuevos
+    AVLNode *node = new AVLNode(state);
+    AVLNode *node2 = new AVLNode(state2);
+    AVLNode *node3 = new AVLNode(state3);
+    AVLNode *node4 = new AVLNode(state4);
+    AVLNode *node5 = new AVLNode(state5);
+    AVLNode *node6 = new AVLNode(state6);
 
     // Se imprime los valores de los nodos
-    std::cout << "Valor del nodo: " << node->data << std::endl;
-    std::cout << "Valor del nodo izquierdo: " << node->left->data << std::endl;
-    std::cout << "Valor del nodo derecho: " << node->right->data << std::endl;
-    std::cout << "Valor del nodo izquierdo del nodo izquierdo: " << node->left->left->data << std::endl;
-    std::cout << "Valor del nodo derecho del nodo izquierdo: " << node->left->right->data << std::endl;
-    std::cout << "Valor del nodo izquierdo del nodo derecho: " << node->right->left->data << std::endl;
+    node->state->print();
+    std::cout << "Node: " << node->state->size << std::endl;
+    std::cout << "Node2: " << node2->state->size << std::endl;
+    std::cout << "Node3: " << node3->state->size << std::endl;
+    std::cout << "Node4: " << node4->state->size << std::endl;
+    std::cout << "Node5: " << node5->state->size << std::endl;
+    std::cout << "Node6: " << node6->state->size << std::endl;
 
     return 0;
 }

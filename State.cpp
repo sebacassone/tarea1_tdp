@@ -30,6 +30,7 @@ State::State(int size, State *parent)
 {
     this->size = size;
     this->board = new int *[size];
+    // Se inicializa el tablero con 0
     for (int i = 0; i < size; i++)
     {
         this->board[i] = new int[size];

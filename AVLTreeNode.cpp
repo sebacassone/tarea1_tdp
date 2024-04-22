@@ -1,8 +1,8 @@
 #include "AVLTreeNode.h"
 
-AVLNode::AVLNode(int value)
+AVLNode::AVLNode(State *estado)
 {
-    data = value;
+    state = estado;
     left = nullptr;
     right = nullptr;
     height = 1;

@@ -1,6 +1,9 @@
 #include "AVLTree.h"
 
-AVLTree::AVLTree() : root(nullptr) {}
+AVLTree::AVLTree()
+{
+    root = nullptr;
+}
 
 AVLTree::~AVLTree()
 {
@@ -64,9 +67,9 @@ AVLNode *AVLTree::insertNode(AVLNode *node, int value)
     if (node == nullptr)
         return new AVLNode(value);
 
-    if (value < node->data)
+    if (value < node->state->distancia)
         node->left = insertNode(node->left, value);
-    else if (value > node->data)
+    else if (value > node->state->distancia)
         node->right = insertNode(node->right, value);
     else
         return node;
@@ -75,19 +78,19 @@ AVLNode *AVLTree::insertNode(AVLNode *node, int value)
 
     int balance = balanceFactor(node);
 
-    if (balance > 1 && value < node->left->data)
+    if (balance > 1 && value < node->left->state->distancia)
         return rotateRight(node);
 
-    if (balance < -1 && value > node->right->data)
+    if (balance < -1 && value > node->right->state->distancia)
         return rotateLeft(node);
 
-    if (balance > 1 && value > node->left->data)
+    if (balance > 1 && value > node->left->state->distancia)
     {
         node->left = rotateLeft(node->left);
         return rotateRight(node);
     }
 
-    if (balance < -1 && value < node->right->data)
+    if (balance < -1 && value < node->right->state->distancia)
     {
         node->right = rotateRight(node->right);
         return rotateLeft(node);
@@ -109,9 +112,9 @@ AVLNode *AVLTree::deleteNode(AVLNode *root, int value)
     if (root == nullptr)
         return root;
 
-    if (value < root->data)
+    if (value < root->state->distancia)
         root->left = deleteNode(root->left, value);
-    else if (value > root->data)
+    else if (value > root->state->distancia)
         root->right = deleteNode(root->right, value);
     else
     {
@@ -131,8 +134,8 @@ AVLNode *AVLTree::deleteNode(AVLNode *root, int value)
         else
         {
             AVLNode *temp = minValueNode(root->right);
-            root->data = temp->data;
-            root->right = deleteNode(root->right, temp->data);
+            root->state->distancia = temp->state->distancia;
+            root->right = deleteNode(root->right, temp->state->distancia);
         }
     }
 
@@ -169,7 +172,7 @@ void AVLTree::inorder(AVLNode *root)
     if (root == nullptr)
         return;
     inorder(root->left);
-    std::cout << root->data << " ";
+    std::cout << root->state->distancia << " ";
     inorder(root->right);
 }
 
@@ -188,12 +191,12 @@ void AVLTree::search(int value)
     AVLNode *node = root;
     while (node != nullptr)
     {
-        if (node->data == value)
+        if (node->state->distancia == value)
         {
             std::cout << "El valor " << value << " está presente en el árbol AVL." << std::endl;
             return;
         }
-        else if (node->data < value)
+        else if (node->state->distancia < value)
             node = node->right;
         else
             node = node->left;
